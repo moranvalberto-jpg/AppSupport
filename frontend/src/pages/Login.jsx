@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import api from "../api/axios";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,7 +12,7 @@ function Login() {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:4000/api/usuarios/login", {
+            const response = await fetch("/api/usuarios/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

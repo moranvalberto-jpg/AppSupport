@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { Form, Button, Card, Row, Col, Spinner } from "react-bootstrap";
 
 const initialState = {
@@ -66,8 +66,8 @@ const AgremiadosForm = ({ onAgremiadoCreado, agremiadoEditar, onCancelEditar }) 
 
       if (editando) {
         // ✏️ EDITAR
-        await axios.put(
-          `http://localhost:4000/api/agremiados/${agremiadoEditar.id}`,
+        await api.put(
+          `/api/agremiados/${agremiadoEditar.id}`,
           formData,
           {
             headers: {
@@ -79,8 +79,8 @@ const AgremiadosForm = ({ onAgremiadoCreado, agremiadoEditar, onCancelEditar }) 
         alert("✏️ Agremiado actualizado correctamente");
       } else {
         // ➕ CREAR
-        await axios.post(
-          "http://localhost:4000/api/agremiados",
+        await api.post(
+          "/api/agremiados",
           formData,
           {
             headers: {

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Container, Table, Button } from "react-bootstrap";
 import Navbar from "../components/Navbar";
+import api from "../api/axios";
 
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -10,11 +11,10 @@ function Usuarios() {
 
   const fetchUsuarios = async () => {
     try {
-      const res = await fetch("http://localhost:4000/api/usuarios", {
+      const res = await api.get("/api/usuarios", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
-      setUsuarios(data);
+      setUsuarios(res.data);
     } catch (error) {
       console.error("Error al obtener usuarios", error);
     }
@@ -26,11 +26,12 @@ function Usuarios() {
 
   const handleEliminar = async (id) => {
     if (!window.confirm("¿Eliminar usuario?")) return;
+
     try {
-      await fetch(`http://localhost:4000/api/usuarios/${id}`, {
-        method: "DELETE",
+      await api.delete(`/api/usuarios/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       setUsuarios(usuarios.filter((u) => u.id !== id));
     } catch (error) {
       console.error("Error al eliminar usuario", error);

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { Button, Table, Form } from "react-bootstrap";
 
 const ExpedienteAgremiado = ({ agremiado }) => {
@@ -11,8 +11,8 @@ const ExpedienteAgremiado = ({ agremiado }) => {
 
     const cargarArchivos = async () => {
         try {
-            const res = await axios.get(
-                `http://localhost:4000/api/agremiados/${agremiado.id}/archivos`,
+            const res = await api.get(
+                `/api/agremiados/${agremiado.id}/archivos`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setArchivos(res.data);
@@ -40,8 +40,8 @@ const ExpedienteAgremiado = ({ agremiado }) => {
         formData.append("archivo", archivo);
 
         try {
-            await axios.post(
-                `http://localhost:4000/api/agremiados/${agremiado.id}/archivos`,
+            await api.post(
+                `/api/agremiados/${agremiado.id}/archivos`,
                 formData,
                 {
                     headers: {
@@ -64,8 +64,8 @@ const ExpedienteAgremiado = ({ agremiado }) => {
         if (!window.confirm("¿Eliminar archivo?")) return;
 
         try {
-            await axios.delete(
-                `http://localhost:4000/api/archivos/${id}`,
+            await api.delete(
+                `/api/archivos/${id}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             cargarArchivos();
@@ -117,7 +117,7 @@ const ExpedienteAgremiado = ({ agremiado }) => {
                                 <td>{new Date(a.fecha_subida).toLocaleDateString()}</td>
                                 <td>
                                     <a
-                                        href={`http://localhost:4000/${a.ruta}`}
+                                        href={`/${a.ruta}`}
                                         target="_blank"
                                         rel="noreferrer"
                                         className="btn btn-sm btn-success me-2"

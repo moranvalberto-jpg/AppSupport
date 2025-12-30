@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { Modal, Button, Form, Table } from "react-bootstrap";
 
 const CuotasAgremiado = ({ agremiado, show, onHide }) => {
@@ -9,15 +9,15 @@ const CuotasAgremiado = ({ agremiado, show, onHide }) => {
   const [totales, setTotales] = useState({});
 
   const cargarCuotas = async () => {
-    const res = await axios.get(
-      `http://localhost:4000/api/agremiados/${agremiado.id}/cuotas`
+    const res = await api.get(
+      `/api/agremiados/${agremiado.id}/cuotas`
     );
     setCuotas(res.data);
   };
 
   const cargarTotales = async () => {
-    const res = await axios.get(
-      `http://localhost:4000/api/agremiados/${agremiado.id}/cuotas/totales`
+    const res = await api.get(
+      `/api/agremiados/${agremiado.id}/cuotas/totales`
     );
     setTotales(res.data);
   };
@@ -32,8 +32,8 @@ const CuotasAgremiado = ({ agremiado, show, onHide }) => {
   const registrarCuota = async (e) => {
     e.preventDefault();
 
-    await axios.post(
-      `http://localhost:4000/api/agremiados/${agremiado.id}/cuotas`,
+    await api.post(
+      `/api/agremiados/${agremiado.id}/cuotas`,
       { tipo, monto }
     );
 

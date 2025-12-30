@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import Navbar from "../components/Navbar";
 import AgremiadosForm from "../components/AgremiadosForm";
 import ExpedienteAgremiado from "../components/ExpedienteAgremiado";
@@ -37,7 +37,7 @@ const Agremiados = () => {
   /* 🔹 Obtener agremiados */
   const fetchAgremiados = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/agremiados", {
+      const res = await api.get("/api/agremiados", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAgremiados(Array.isArray(res.data) ? res.data : []);
