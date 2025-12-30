@@ -14,13 +14,11 @@ function Login() {
 
     try {
       const response = await api.post("/api/usuarios/login", {
-        email,
+        email: email.trim(),
         password,
       });
 
       const data = response.data;
-
-      console.log("RESPUESTA LOGIN:", data);
 
       localStorage.setItem("token", data.token);
       localStorage.setItem(
@@ -34,12 +32,13 @@ function Login() {
       );
 
       navigate("/dashboard");
-
     } catch (err) {
-      console.error(err);
+      console.error("ERROR LOGIN:", err);
+
       setError(
+        err.response?.data?.mensaje ||
         err.response?.data?.message ||
-        "No se pudo conectar con el servidor"
+        "Error al iniciar sesión"
       );
     }
   };
