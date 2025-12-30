@@ -8,39 +8,29 @@ import agremiadoRoutes from "./routes/agremiadoRoutes.js";
 import archivosRoutes from "./routes/archivos.routes.js";
 import cuotasRoutes from "./routes/cuotas.routes.js";
 
-
 dotenv.config();
 
 const app = express();
 
-// 🔹 Middlewares
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// 🔹 Archivos estáticos
+// Archivos estáticos
 app.use("/uploads", express.static("uploads"));
 
-// 🔹 Base de datos
-connection.connect((err) => {
-  if (err) {
-    console.error("❌ Error al conectar a MySQL:", err);
-    return;
-  }
-  console.log("✅ Conectado a la base de datos MySQL");
-});
-
-// 🔹 Rutas API
+// Rutas
 app.use("/api/usuarios", userRoutes);
 app.use("/api/agremiados", agremiadoRoutes);
 app.use("/api", archivosRoutes);
 app.use("/api", cuotasRoutes);
 
-// 🔹 Ruta test
+// Test
 app.get("/", (req, res) => {
   res.send("Servidor AppSupport activo 🚀");
 });
 
-// 🔹 Server
+// Server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
